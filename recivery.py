@@ -13,8 +13,11 @@ class Reciveray(object):
     def food_recommend(self):        
         return self.FoodCom.rank_page()
     
-    def search(self, keywords):
+    def food_search(self, keywords):
         return self.FoodCom.search(keywords)
+    
+    def food_keep_advise(self, keywords):
+        return 
     
     def workflow(self):
         
@@ -62,6 +65,7 @@ class Reciveray(object):
         except:
             print("\nTODO: display dish") 
             
+            
         # bug ingredient
         tag = input("\nDo you want to buy the ingredients and try it? Y/N: ")
         buy_tag = tag == "Y"
@@ -73,13 +77,14 @@ class Reciveray(object):
                 grocery_dic = self.GoogleMap.search(post_code)
                 print(grocery_dic)
                 
-                grocery_id = input("\nChoose the recipy you want to see detail？Only Number: ")
+                grocery_id = input("\nChoose the grocery you want to see detail？Only Number: ")
                 grocery_id = eval(grocery_id)
                 
             except:
                 print("\nTODO: bug ingredient") 
             
             print("\nYour order has been confirmed.")  
+                    
                     
         # display food keep advise
         tag = input("\nDo you want to know how to keep the ingredients? Y/N: ")
@@ -89,7 +94,7 @@ class Reciveray(object):
                 print(self.FoodCom.display_ingredients())
                 ingredient_id = input("\nChoose the ingredient you want to see detail？Only Number: ")
                 ingredient_id = eval(ingredient_id)
-                print(self.FoodCom.display_ingredients(ingredient_id)) 
+                self.food_keep_advise(self.FoodCom.ingredients[ingredient_id])
             except:
                 print("\nTODO: display food keep advise")
                 
@@ -98,7 +103,34 @@ class Reciveray(object):
 
 if __name__ == '__main__':
 
-    reciveray =  Reciveray(online_mode=False)
+    tag = input("\nDo you want to access the app online or offline? ON/OFF: ")
+    reciveray = Reciveray(online_mode=tag=='ON')
     reciveray.workflow()
     
+
+
+'''
+FoodCom
+
+self.FoodCom.rank_page()  -> dict
+self.FoodCom.search(keywords)  -> dict
+self.FoodCom.dish_id
+self.FoodCom.one_recipe_detail(dish_id)  -> dict
+self.FoodCom.display_ingredients()  -> dict
+self.FoodCom.ingredients[ingredient_id]  -> str
+'''
+
+'''
+GoogleMap
+
+self.GoogleMap.search(post_code) -> dict
+'''
+
+'''
+FoodKeeper
+
+self.food_keep_advise(self.FoodCom.ingredients[ingredient_id])  -> dict
+'''
+
+
 
